@@ -13,7 +13,6 @@
         return alert("Sir... Please select your SVG first.");
       } else {
         $(".result").html(e);
-        console.log(e);
         $(".result svg path, .result svg text, .result svg polygon, .result svg rect").each(function() {
           $(this).css("stroke-dasharray", $(this)[0].getTotalLength() + "px");
           $(this).css("stroke-dashoffset", $(this)[0].getTotalLength() + "px");

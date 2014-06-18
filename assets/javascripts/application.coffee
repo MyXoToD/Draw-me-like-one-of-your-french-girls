@@ -1,42 +1,48 @@
 $(document).ready ->
   app.init()
 
+  # Apply stroke length details to demo
   $(".demo svg path").each ->
     $(this).css("stroke-dasharray", $(this)[0].getTotalLength())
     $(this).css("stroke-dashoffset", $(this)[0].getTotalLength())
 
+  # Handle SVG upload
   $("form").ajaxForm (e) ->
     if e is "error"
       alert "Sir... Please select your SVG first."
     else
+      # Apply result SVG
       $(".result").html(e)
-      console.log e
-      # frame = $(".result")
-      # doc = frame[0].contentWindow.document;
-      # body = $('body',doc);
-      # body.html(e);
 
+      # Loop through each path and apply stroke length details
       $(".result svg path, .result svg text, .result svg polygon, .result svg rect").each ->
         $(this).css("stroke-dasharray", $(this)[0].getTotalLength() + "px")
         $(this).css("stroke-dashoffset", $(this)[0].getTotalLength() + "px")
         app.paths += "&nbsp;&nbsp;&#" + $(this).attr("id") + " {<br />&nbsp;&nbsp;&nbsp;&nbsp;stroke-dasharray: " + $(this)[0].getTotalLength() + "px;<br />&nbsp;&nbsp;&nbsp;&nbsp;stroke-dashoffset: " + $(this)[0].getTotalLength() + "px;<br />&nbsp;&nbsp;}<br />"
+      
+      # Toggle boxes
       $("form").hide()
       $(".result-box").fadeIn()
+
+      # Scroll to result
       $("html,body").animate
         scrollTop: $("#result").offset().top
+
+      # Load SASS code
       app.update_code()
 
-
+# Apllication Object
 app =
-  width: "2"
-  color: "#1abc9c"
-  duration: "5"
-  loop: true
-  rounded: "round"
-  paths: ""
-  keyframes: "<br /><br />@keyframes draw {<br />&nbsp;&nbsp;to {<br />&nbsp;&nbsp;&nbsp;&nbsp;stroke-dashoffset: 0;<br />&nbsp;&nbsp;}<br />}"
+  width: "2" # Default stroke width
+  color: "#1abc9c" # Default stroke color
+  duration: "5" # Default animation duration
+  loop: true # Default loop state
+  rounded: "round" # Default linecap
+  paths: "" # Store path information here
+  keyframes: "<br /><br />@keyframes draw {<br />&nbsp;&nbsp;to {<br />&nbsp;&nbsp;&nbsp;&nbsp;stroke-dashoffset: 0;<br />&nbsp;&nbsp;}<br />}" # SASS animation
 
   init: ->
+    # Listen for things to happen
     @bind_events()
 
   bind_events: ->
@@ -94,6 +100,7 @@ app =
       animation += "<br />&nbsp;&nbsp;animation-iteration-count: infinite;<br />&nbsp;&nbsp;animation-fill-mode: none;"
     else
       animation += "<br />&nbsp;&nbsp;animation-iteration-count: 1;<br />&nbsp;&nbsp;animation-fill-mode: forwards;"
+    # Update SASS code
     $(".code").html "svg path, svg text, svg rect, svg polygon {<br />&nbsp;&nbsp;fill-opacity: 0;<br />&nbsp;&nbsp;stroke: " + @color + ";<br />&nbsp;&nbsp;stroke-width: " + @width + ";<br />&nbsp;&nbsp;stroke-linecap: " + @rounded + ";<br />" + animation + "<br />" + @paths + "}" + @keyframes
 
 
