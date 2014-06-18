@@ -1,0 +1,1 @@
+All uploaded SVGs will be stored in this folder.
