@@ -2,6 +2,8 @@
 
 With this tool your can upload any of your SVGs and get back a little bit of SASS which animates the SVG with a *"self-drawing"*-effect. You can adjust some settings to make the animation as you want it.
 
+**LIVE:** http://dmlooyfg.myxotod.com/
+
 ## Usage
 
 * Upload your SVG
